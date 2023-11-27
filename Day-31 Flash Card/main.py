@@ -9,6 +9,7 @@ new_data = french_pd.to_dict(orient="records")
 def next_word():
     num = randint(0,100)
     new_word = new_data[num]["French"]
+    canvas.itemconfig(title, text="French")
     canvas.itemconfig(word, text=new_word)
 
 # UserInterface
