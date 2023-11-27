@@ -4,6 +4,7 @@ from random import choice
 
 BACKGROUND_COLOR = "#B1DDC6"
 current_card = {}
+learned_words = []
 # For German
 german_pd = pandas.read_csv("data/german_words.csv")
 german_dict = german_pd.to_dict(orient="records")
@@ -29,7 +30,10 @@ def next_word():
     canvas.itemconfig(word, text=current_card["French"], fill="black")
     timer = window.after(3000, func=flip_card)
 
-
+def learned_word():
+    next_word()
+    learned_words.append(current_card)
+    new_data.remove(current_card)
 
 # Flash Card
 def flip_card():
@@ -60,7 +64,7 @@ word = canvas.create_text(400, 263, text="", font=("Ariel", 60, "bold"))
 # Button
 correct_image = PhotoImage(file="images/right.png")
 wrong_image = PhotoImage(file="images/wrong.png")
-correct_button = Button(image=correct_image, highlightthickness=0, command=next_word)
+correct_button = Button(image=correct_image, highlightthickness=0, command=learned_word)
 wrong_button = Button(image=wrong_image, highlightthickness=0, command=next_word)
 
 correct_button.grid(row=1, column=0)
