@@ -17,8 +17,12 @@ def german_word():
 
 
 # Pandas operation for french
-french_pd = pandas.read_csv("data/french_words.csv")
+try:
+    french_pd = pandas.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    french_pd = pandas.read_csv("data/french_words.csv")
 new_data = french_pd.to_dict(orient="records")
+
 
 
 def next_word():
@@ -31,9 +35,10 @@ def next_word():
     timer = window.after(3000, func=flip_card)
 
 def learned_word():
-    next_word()
-    learned_words.append(current_card)
     new_data.remove(current_card)
+    pd_a = pandas.DataFrame(new_data)
+    pd_a.to_csv("data/words_to_learn.csv",index=False)
+    next_word()
 
 # Flash Card
 def flip_card():
